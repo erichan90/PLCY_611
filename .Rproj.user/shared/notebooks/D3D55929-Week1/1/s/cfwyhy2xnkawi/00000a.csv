@@ -1,0 +1,6 @@
+"0","    "
+"0","    #calcualte the yearly sale average"
+"0","    summary3<-ex2%>%"
+"0","          group_by(Year)%>%"
+"0","          summarise_at(vars(Value),list(Year_avg=mean))"
+"0","    print(summary3)"

@@ -1,0 +1,148 @@
+---
+title: "Introduction to R"
+output:
+  github_document:
+  df_print: paged
+  github_notebook: default
+---
+# **Outline**\
+  1.Writing and Running Code \
+  2.Import and save dateset \
+  3.basic functions of R \
+  4.basic manipulations of data in R \
+
+## 1.writing and Running code
+### 1.1 Writing code
+  Always write code in script or markdown so that your work can be reproduced. 
+  You may want to click the button to write code in an r file to have a larger space for writing code.
+  ![alt text here](C:/Users/hansh/OneDrive - University of Maryland/611/R/figures/week1/figure1.png)
+### 1.2 Running code
+  The code you run in the top will display below in the console
+  You run the code by highlighting it and clicking the run button
+  The shortcut on mac is Cmd+Return & the shortcun on Window is crtl+alt+enter
+![alt text here](C:/Users/hansh/OneDrive - University of Maryland/611/R/figures/week1/figure2.png)
+### 1.3
+  #You can write comments by using the hashtag
+  #Commented code will not be written
+  print('The commented code will display in the console but will not be read as code')
+  
+
+## 2Import and save dataset
+### 2.1 Import CSV
+  CSV stands for comma separated variable and its one of the most common ways we'll be working with data   throughout this course. The basic format of a csv file is the first line indicating the column names and the rest of the rows/lines being data points separated by commas. One of the most basic ways to read in csv files in R is to use read.csv() which is built-in to R. 
+      
+  When using read.csv() you'll need to either pass in the entire path of the file or have the file be in the same directory as your R script. Make sure to account for possible spaces in the file path name, you may need to use backslashes to account for this. This is often a point of confusion for people new to programming, so make sure you understand the above before continuing!
+```{r}
+    #record the time
+    ptm1 <- proc.time()
+    # Pass in the entire file path if not in same directory
+    ex <- read.csv('sales.csv')
+    ## Stop the clock
+    proc.time() - ptm1
+    
+    # Check structure
+    str(ex)
+    # Check the class 
+    class(ex)
+    # Check column names
+    colnames(ex)
+    # Check the observations
+    head(ex)
+    
+```
+### 2.2 Export CSV
+```{r}
+    #Export the sample file as csv
+   write.csv(ex, file = "example.csv")
+```
+## 3Basic functions
+```{r}
+    #Sum of one variable
+    #first need to convert the string variable to numeric 
+    ex$Value<-as.numeric(gsub('[$,]', '',ex$Value))
+    sum(ex$Value)    
+    
+    #Standard deviation of one variable
+    sd(ex$Value)
+
+    #Summary statistics of the dataset
+    summary(ex)
+``` 
+## 4 Basic manipulation
+```{r,message=FALSE}
+    options(repos = list(CRAN="http://cran.rstudio.com/"))
+    #install package
+    install.packages("dplyr")
+    #import the package
+    library(dplyr)
+```
+### 4.1 Sort
+```{r,message=FALSE}
+    #Sort the dataset by Sale Rep & year in rising order
+    ex2<-ex%>%
+         arrange(Sales_Rep_Name,Year)
+    head(ex2)
+```
+### 4.2 Calculate the group average
+   
+```{r,message=FALSE}
+ #calculate the yearly average and sum sale for each employee
+    summary<-ex2%>%
+          group_by(Sales_Rep_Name,Year)%>%
+          summarise_at(vars(Value), list(Avg_value=mean,Tot_value=sum))
+
+    print(summary)
+  #calculate the representative sale average
+    summary2<-ex2%>%
+          group_by(Sales_Rep_Name)%>%
+          summarise_at(vars(Value),list(Rep_avg=mean))
+    
+    print(summary2)
+    
+    #calcualte the yearly sale average
+    summary3<-ex2%>%
+          group_by(Year)%>%
+          summarise_at(vars(Value),list(Year_avg=mean))
+    
+    print(summary3)
+    
+```
+### 4.3 Merge dataset
+```{r, message=FALSE}
+   data<-merge(summary,summary2,by="Sales_Rep_Name")
+   data2<-merge(data,summary3,by="Year")
+```
+### 4.4 create new variables
+```{r}
+   data3<-data2%>%
+          mutate(higher_hor=(Avg_value>Year_avg), #if the repersentative yearly average sale is higher than the yearly average, it is coded as one
+                 higher_ver=(Avg_value>Rep_avg) #if the repersentative yearly average sale is higher than the his or her own average, it is coded as one
+               )
+
+  #print the newly created dataset3
+  print(data3)
+```
+  More information can be found at 
+  [linked phrase](https://dplyr.tidyverse.org/)
+  
+    
+    
+  
+    
+```
+
+
+
+
+    
+    
+    
+    
+    
+  
+```
+
+
+
+    
+  

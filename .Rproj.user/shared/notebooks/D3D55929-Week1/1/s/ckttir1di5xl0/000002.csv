@@ -1,0 +1,7 @@
+"0","  ex$Value<-as.numeric(gsub('[$,]', '',ex$Value))
+    sum(ex$Value)    
+"
+"1","[1]"
+"1"," 19199465"
+"1","
+"

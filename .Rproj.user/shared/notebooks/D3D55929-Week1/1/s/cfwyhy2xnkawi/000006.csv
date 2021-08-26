@@ -1,0 +1,6 @@
+"0"," #calculate the yearly average and sum sale for each employee"
+"0","    summary<-ex2%>%"
+"0","          group_by(Sales_Rep_Name,Year)%>%"
+"0","          summarise_at(vars(Value), list(Avg_value=mean,Tot_value=sum))"
+"0",""
+"0","    print(summary)"

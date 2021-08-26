@@ -1,0 +1,4 @@
+"0","    #Sort the dataset by Sale Rep & year in rising order"
+"0","    ex2<-ex%>%"
+"0","         arrange(Sales_Rep_Name,Year)"
+"0","    head(ex2)"
