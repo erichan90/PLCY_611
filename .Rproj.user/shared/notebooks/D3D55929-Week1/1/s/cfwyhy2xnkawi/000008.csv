@@ -1,5 +1,0 @@
-"0","  #calculate the representative sale average"
-"0","    summary2<-ex2%>%"
-"0","          group_by(Sales_Rep_Name)%>%"
-"0","          summarise_at(vars(Value),list(Rep_avg=mean))"
-"0","    print(summary2)"
