@@ -243,7 +243,7 @@ above before continuing!
    data2<-merge(data,summary3,by="Year")
 ```
 
-### 4.4 create new variables
+### 4.4 Create new variables
 
 ``` r
    data3<-data2%>%
