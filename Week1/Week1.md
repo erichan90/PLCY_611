@@ -133,7 +133,7 @@ above before continuing!
     ##  3rd Qu.:2142   3rd Qu.:789                      3rd Qu.:2013   3rd Qu.:72278  
     ##  Max.   :2206   Max.   :789                      Max.   :2013   Max.   :99878
 
-## 4 Basic manipulation
+## 4 Basic manipulations
 
 ``` r
     options(repos = list(CRAN="http://cran.rstudio.com/"))
