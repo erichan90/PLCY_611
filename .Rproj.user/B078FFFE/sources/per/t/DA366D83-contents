@@ -1,7 +1,7 @@
 ---
 title: "Introduction to R"
 output:
-  github_document:
+  html_document:
   df_print: paged
   github_notebook: default
 ---
@@ -68,7 +68,7 @@ output:
     #Summary statistics of the dataset
     summary(ex)
 ``` 
-## 4 Basic manipulation
+## 4 Basic manipulations
 ```{r,message=FALSE}
     options(repos = list(CRAN="http://cran.rstudio.com/"))
     #install package
@@ -112,7 +112,7 @@ output:
    data<-merge(summary,summary2,by="Sales_Rep_Name")
    data2<-merge(data,summary3,by="Year")
 ```
-### 4.4 create new variables
+### 4.4 Create new variables
 ```{r}
    data3<-data2%>%
           mutate(higher_hor=(Avg_value>Year_avg), #if the repersentative yearly average sale is higher than the yearly average, it is coded as one
@@ -123,7 +123,7 @@ output:
   print(data3)
 ```
   More information can be found at 
-  [linked phrase](https://dplyr.tidyverse.org/)
+  [this Link](https://dplyr.tidyverse.org/)
   
     
     

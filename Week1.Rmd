@@ -1,7 +1,7 @@
 ---
 title: "Introduction to R"
 output:
-  github_document:
+  html_document:
   df_print: paged
   github_notebook: default
 ---
@@ -68,7 +68,7 @@ output:
     #Summary statistics of the dataset
     summary(ex)
 ``` 
-## 4 Basic manipulation
+## 4 Basic manipulations
 ```{r,message=FALSE}
     options(repos = list(CRAN="http://cran.rstudio.com/"))
     #install package
@@ -83,7 +83,52 @@ output:
          arrange(Sales_Rep_Name,Year)
     head(ex2)
 ```
-### 4.2 Calculate the group average
+### 4.2 Subset sample
+```{r}
+    #Only select observations in 2011
+    ex2011<-ex%>%
+            filter(Year==2011)
+
+    #Only select observations from John
+    ex2011_Jonh<-ex2011%>%
+            filter(Sales_Rep_Name%in%c("John"))
+    
+    #Finish subsetting in one chunk of code
+    ex2011_Jonh2<-ex%>%
+            filter(Year==2011&Sales_Rep_Name%in%c("John"))
+    
+    
+    #select observations in either 2011 or 2012
+    ex2011_12<-ex%>%
+            filter(Year==2011|Year==2012)
+    
+  
+    
+```
+### 4.3 Slice datasets
+```{r}
+    #show the first ten observations
+    head(ex2011_12,10)
+    
+    #show the last ten observations
+    tail(ex2011_12,10)
+    
+    # first sort the dataset by value and then show the Top 20 sales
+    head(arrange(ex2011_12,desc(Value)),20)
+    
+    #Store the observations in a new dataset called 
+    ex2011_12_top20<-head(arrange(ex2011_12,desc(Value)),20)
+    
+    #In addition to tail and head, we can also use [] to subset dataset
+    #show the first ten observations
+    ex2011_12_top20[1:10,]
+    
+    #show only first ten observations of the variables in 3-5 columns
+    ex2011_12_top20[1:10,3:5]
+``` 
+    
+
+### 4.4 Calculate the group average
    
 ```{r,message=FALSE}
  #calculate the yearly average and sum sale for each employee
@@ -107,12 +152,12 @@ output:
     print(summary3)
     
 ```
-### 4.3 Merge dataset
+### 4.5 Merge datasets
 ```{r, message=FALSE}
    data<-merge(summary,summary2,by="Sales_Rep_Name")
    data2<-merge(data,summary3,by="Year")
 ```
-### 4.4 create new variables
+### 4.6 Create new variables
 ```{r}
    data3<-data2%>%
           mutate(higher_hor=(Avg_value>Year_avg), #if the repersentative yearly average sale is higher than the yearly average, it is coded as one
@@ -122,26 +167,11 @@ output:
   #print the newly created dataset3
   print(data3)
 ```
-  More information can be found at 
-  [linked phrase](https://dplyr.tidyverse.org/)
+  More information about variable creation can be found at 
+  [this Link](https://dplyr.tidyverse.org/)
   
     
     
-  
-    
-```
-
-
-
-
-    
-    
-    
-    
-    
-  
-```
-
 
 
     

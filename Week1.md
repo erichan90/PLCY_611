@@ -133,7 +133,7 @@ above before continuing!
     ##  3rd Qu.:2142   3rd Qu.:789                      3rd Qu.:2013   3rd Qu.:72278  
     ##  Max.   :2206   Max.   :789                      Max.   :2013   Max.   :99878
 
-## 4 Basic manipulation
+## 4 Basic manipulations
 
 ``` r
     options(repos = list(CRAN="http://cran.rstudio.com/"))
@@ -155,7 +155,7 @@ above before continuing!
 
     ## 
     ## The downloaded binary packages are in
-    ##  C:\Users\hansh\AppData\Local\Temp\RtmpekZII1\downloaded_packages
+    ##  C:\Users\hansh\AppData\Local\Temp\RtmpwhWtVp\downloaded_packages
 
 ``` r
     #import the package
@@ -179,7 +179,129 @@ above before continuing!
     ## 5        2049          789         Ashish 2011 87702
     ## 6        2087          789         Ashish 2011   106
 
-### 4.2 Calculate the group average
+### 4.2 Subset sample
+
+``` r
+    #Only select observations in 2011
+    ex2011<-ex%>%
+            filter(Year==2011)
+
+    #Only select observations from John
+    ex2011_Jonh<-ex2011%>%
+            filter(Sales_Rep_Name%in%c("John"))
+    
+    #Finish subsetting in one chunk of code
+    ex2011_Jonh2<-ex%>%
+            filter(Year==2011&Sales_Rep_Name%in%c("John"))
+    
+    
+    #select observations in either 2011 or 2012
+    ex2011_12<-ex%>%
+            filter(Year==2011|Year==2012)
+```
+
+### 4.3 Slice datasets
+
+``` r
+    #show the first ten observations
+    head(ex2011_12,10)
+```
+
+    ##    ï..Postcode Sales_Rep_ID Sales_Rep_Name Year Value
+    ## 1         2121          456           Jane 2011 84219
+    ## 2         2092          789         Ashish 2012 28322
+    ## 3         2073          123           John 2011 44491
+    ## 4         2134          789         Ashish 2012 71838
+    ## 5         2093          456           Jane 2011 58963
+    ## 6         2042          789         Ashish 2012 27522
+    ## 7         2043          789         Ashish 2011 49546
+    ## 8         2025          789         Ashish 2012 17734
+    ## 9         2090          456           Jane 2011 48113
+    ## 10        2114          456           Jane 2012 28361
+
+``` r
+    #show the last ten observations
+    tail(ex2011_12,10)
+```
+
+    ##     ï..Postcode Sales_Rep_ID Sales_Rep_Name Year Value
+    ## 251        2192          789         Ashish 2011 24078
+    ## 252        2109          456           Jane 2012 45719
+    ## 253        2194          123           John 2011 66864
+    ## 254        2141          123           John 2012 54683
+    ## 255        2033          789         Ashish 2011 76990
+    ## 256        2072          123           John 2012 35366
+    ## 257        2018          789         Ashish 2011 97168
+    ## 258        2164          123           John 2012 88885
+    ## 259        2031          123           John 2011 65644
+    ## 260        2130          456           Jane 2012 66248
+
+``` r
+    # first sort the dataset by value and then show the Top 20 sales
+    head(arrange(ex2011_12,desc(Value)),20)
+```
+
+    ##    ï..Postcode Sales_Rep_ID Sales_Rep_Name Year Value
+    ## 1         2048          789         Ashish 2011 99878
+    ## 2         2047          456           Jane 2011 99865
+    ## 3         2204          789         Ashish 2011 99744
+    ## 4         2086          456           Jane 2012 99436
+    ## 5         2032          789         Ashish 2011 98780
+    ## 6         2146          123           John 2012 98511
+    ## 7         2125          456           Jane 2011 98235
+    ## 8         2018          789         Ashish 2011 97168
+    ## 9         2166          456           Jane 2011 97072
+    ## 10        2049          456           Jane 2012 96922
+    ## 11        2031          789         Ashish 2012 96343
+    ## 12        2150          123           John 2011 95860
+    ## 13        2128          789         Ashish 2012 95799
+    ## 14        2109          123           John 2012 95787
+    ## 15        2062          789         Ashish 2012 95386
+    ## 16        2197          789         Ashish 2012 95119
+    ## 17        2135          456           Jane 2011 94182
+    ## 18        2205          789         Ashish 2012 93306
+    ## 19        2153          789         Ashish 2011 92728
+    ## 20        2029          456           Jane 2011 92118
+
+``` r
+    #Store the observations in a new dataset called 
+    ex2011_12_top20<-head(arrange(ex2011_12,desc(Value)),20)
+    
+    #In addition to tail and head, we can also use [] to subset dataset
+    #show the first ten observations
+    ex2011_12_top20[1:10,]
+```
+
+    ##    ï..Postcode Sales_Rep_ID Sales_Rep_Name Year Value
+    ## 1         2048          789         Ashish 2011 99878
+    ## 2         2047          456           Jane 2011 99865
+    ## 3         2204          789         Ashish 2011 99744
+    ## 4         2086          456           Jane 2012 99436
+    ## 5         2032          789         Ashish 2011 98780
+    ## 6         2146          123           John 2012 98511
+    ## 7         2125          456           Jane 2011 98235
+    ## 8         2018          789         Ashish 2011 97168
+    ## 9         2166          456           Jane 2011 97072
+    ## 10        2049          456           Jane 2012 96922
+
+``` r
+    #show only first ten observations of the variables in 3-5 columns
+    ex2011_12_top20[1:10,3:5]
+```
+
+    ##    Sales_Rep_Name Year Value
+    ## 1          Ashish 2011 99878
+    ## 2            Jane 2011 99865
+    ## 3          Ashish 2011 99744
+    ## 4            Jane 2012 99436
+    ## 5          Ashish 2011 98780
+    ## 6            John 2012 98511
+    ## 7            Jane 2011 98235
+    ## 8          Ashish 2011 97168
+    ## 9            Jane 2011 97072
+    ## 10           Jane 2012 96922
+
+### 4.4 Calculate the group average
 
 ``` r
  #calculate the yearly average and sum sale for each employee
@@ -236,14 +358,14 @@ above before continuing!
     ## 2  2012   47323.
     ## 3  2013   49778.
 
-### 4.3 Merge dataset
+### 4.5 Merge datasets
 
 ``` r
    data<-merge(summary,summary2,by="Sales_Rep_Name")
    data2<-merge(data,summary3,by="Year")
 ```
 
-### 4.4 create new variables
+### 4.6 Create new variables
 
 ``` r
    data3<-data2%>%
@@ -276,16 +398,5 @@ above before continuing!
     ## 8       TRUE
     ## 9       TRUE
 
-More information can be found at [linked
-phrase](https://dplyr.tidyverse.org/)
-
-
-
-
-
-        
-        
-        
-        
-        
-      
+More information about variable creation can be found at [this
+Link](https://dplyr.tidyverse.org/)
